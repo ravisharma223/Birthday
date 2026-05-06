@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff5f7;
+  background: linear-gradient(270deg, #2b0a1a, #5a0f2e, #a4163a);
+  background-size: 400% 400%;
+  animation: bgMove 12s ease infinite;
+  padding: 12px;
+  transition: opacity 1s ease;
+}
+
+.fade-out { opacity: 0; }
+
+@keyframes bgMove {
+  0% { background-position: 0% }
+  50% { background-position: 100% }
+  100% { background-position: 0% }
+}
+
+/* Card */
+.card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  padding: clamp(16px, 4vw, 25px);
+  border-radius: 20px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  transition: 0.4s;
+  z-index: 2;
+}
+
+/* Disable heavy hover on mobile */
+@media (hover: hover) {
+  .card:hover {
+    transform: scale(1.05) rotateX(4deg);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+}
+
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.8rem, 7vw, 2.5rem);
+  color: #ffccd5;
+  margin-bottom: 10px;
+}
+
+/* Image */
+.photo img {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin: 12px 0;
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  .photo img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #ff8fab;
+  }
+}
+
+/* Text */
+.line {
+  opacity: 0;
+  margin-top: 10px;
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  line-height: 1.5;
+}
+
+.line1 { animation: fadeUp 1s forwards; animation-delay: 0.5s; }
+.line2 { animation: fadeUp 1s forwards; animation-delay: 1.5s; }
+.line3 { animation: fadeUp 1s forwards; animation-delay: 2.5s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Flowers */
+.flower {
+  position: absolute;
+  font-size: clamp(14px, 4vw, 22px);
+  animation: fall linear;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0); }
+  100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  animation: sparkle 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes sparkle {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Reduce animations on low-end devices */
+@media (max-width: 400px) {
+  body {
+    animation-duration: 18s;
+  }
+}
+</style>
+</head>
+
+<body onclick="handleTap(event)">
+
+<div class="card">
+  <h1>For My Love 💕</h1>
+
+  <div class="photo">
+    <img src="./mwah.gif" alt="Memory">
+  </div>
+
+  <div class="line line1">
+If I were to write what my heart would say,
+It whispers your name in every way.
+No time, no fate, could make me stray,
+For you are my forever, come what may.
+  </div>
+
+  <div class="line line2">
+    Kaisa laga mera sweetu kiss!!🥰
+    Acha laga na.. 
+  </div>
+
+  <div class="line line3">
+    Toh daba dijiye na 3 baar 🤤 <br>
+    arehh wo nhii re card ko dabao
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-to-you-piano-version-11711.mp3" type="audio/mpeg">
+  </audio>
+
+<script>
+let taps = 0;
+let musicStarted = false;
+
+function handleTap(e){
+  if(!musicStarted){
+    document.getElementById("bgMusic").play().catch(()=>{});
+    musicStarted = true;
+  }
+
+  if(navigator.vibrate){
+    navigator.vibrate(50);
+  }
+
+  // burst
+  for(let i=0;i<6;i++){
+    let f=document.createElement("div");
+    f.className="flower";
+    f.innerHTML="🌸";
+    f.style.left=e.clientX+"px";
+    f.style.top=e.clientY+"px";
+    f.style.animationDuration="2s";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),2000);
+  }
+
+  taps++;
+
+  if(taps === 3){
+    document.body.classList.add("fade-out");
+    setTimeout(()=>{
+      window.location.href = "page3.html";
+    },1000);
+  }
+}
+
+// flower rain
+setInterval(()=>{
+  let flower=document.createElement("div");
+  flower.className="flower";
+  flower.innerHTML=["🌸","🌺","🌼","💮"][Math.floor(Math.random()*4)];
+  flower.style.left=Math.random()*100+"vw";
+  flower.style.animationDuration=(Math.random()*3+5)+"s";
+  document.body.appendChild(flower);
+  setTimeout(()=>flower.remove(),8000);
+},400);
+
+// sparkles
+setInterval(()=>{
+  let s=document.createElement("div");
+  s.className="sparkle";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),2000);
+},300);
+
+window.onload = () => {
+  let music = document.getElementById("bgMusic");
+  music.volume = 0.4;
+};
+function handleTap(e){
+  let music = document.getElementById("bgMusic");
+
+  if(!musicStarted){
+    music.play().then(()=>{
+      console.log("Music started");
+    }).catch(err=>{
+      console.log("Error:", err);
+    });
+    musicStarted = true;
+  }
+
+  if(navigator.vibrate){
+    navigator.vibrate(50);
+  }
+
+  // flower burst
+  for(let i=0;i<6;i++){
+    let f=document.createElement("div");
+    f.className="flower";
+    f.innerHTML="🌸";
+    f.style.left=e.clientX+"px";
+    f.style.top=e.clientY+"px";
+    f.style.animationDuration="2s";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),2000);
+  }
+
+  taps++;
+
+  if(taps === 3){
+    document.body.classList.add("fade-out");
+    setTimeout(()=>{
+      window.location.href = "page3.html";
+    },1000);
+  }
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💖</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh;
+  text-align: center;
+  color: white;
+  padding: 15px;
+  overflow: hidden;
+  transition: opacity 0.6s ease;
+}
+
+/* Card */
+.card {
+  background: rgba(255,255,255,0.2);
+  padding: clamp(18px, 5vw, 28px);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: cardEntry 1s ease forwards;
+}
+
+@keyframes cardEntry {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Text */
+h1 {
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  margin-bottom: 10px;
+  opacity: 0;
+  animation: fadeUp 1s forwards;
+  animation-delay: 0.5s;
+}
+
+p {
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  margin-bottom: 15px;
+  opacity: 0;
+  animation: fadeUp 1s forwards;
+  animation-delay: 1s;
+}
+
+button {
+  margin-top: 10px;
+  padding: clamp(12px, 3.5vw, 16px);
+  border: none;
+  border-radius: 30px;
+  background: white;
+  color: #ff4e50;
+  cursor: pointer;
+  width: 100%;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeUp 1s forwards;
+  animation-delay: 1.5s;
+}
+
+button:hover {
+  background: #ff4e50;
+  color: white;
+  box-shadow: 0 0 15px rgba(255,78,80,0.6);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 💖 Floating hearts */
+.heart {
+  position: absolute;
+  color: rgba(255,255,255,0.6);
+  animation: float 10s linear infinite;
+  pointer-events: none;
+}
+.nameFloat {
+  position: absolute;
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(14px, 3vw, 20px);
+  color: #fff0f3;
+  text-shadow: 0 0 8px #ff8fab, 0 0 20px #ff4d6d;
+  animation: floatUp linear;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  20% { opacity: 0.8; }
+  100% {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  from {
+    transform: translateY(100vh) scale(1);
+  }
+  to {
+    transform: translateY(-10vh) scale(1.3);
+  }
+}
+</style>
+</head>
+
+<body ontouchstart="startMusic()" onclick="startMusic()">
+
+<div class="card">
+  <h1>Happiest Birthday Mera baccha Mera babu 💖</h1>
+  <p>Kuch hai aapke liye... 🎁</p>
+  <button onclick="nextPage()">Continue ➡️</button>
+</div>
+
+<!-- 🎵 Music -->
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-to-you-piano-version-11711.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let musicStarted = false;
+
+/* 🎵 Start music safely */
+function startMusic(){
+  if(!musicStarted){
+    let music = document.getElementById("bgMusic");
+    music.volume = 0.4;
+    music.play().catch(()=>{});
+    musicStarted = true;
+  }
+}
+
+/* 🎬 Next page */
+function nextPage(){
+  document.body.style.opacity = "0";
+  setTimeout(()=>{
+    window.location.href = "page2.html";
+  },600);
+}
+
+/* 👉 Swipe gesture */
+let startX = 0;
+
+document.addEventListener("touchstart", e=>{
+  startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e=>{
+  let endX = e.changedTouches[0].clientX;
+
+  if(startX - endX > 50){
+    nextPage(); // swipe left
+  }
+});
+
+/* 💖 Floating hearts */
+setInterval(()=>{
+  let h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "❤";
+  h.style.left = Math.random()*100+"vw";
+  h.style.fontSize = (Math.random()*20+12)+"px";
+
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),10000);
+},500);
+
+// Only left & right lanes (card center safe)
+setInterval(()=>{
+  let n = document.createElement("div");
+  n.className = "nameFloat";
+
+  n.innerHTML = " I 💖 U PRIYA ";
+
+  // Left OR Right side only
+  let side = Math.random() > 0.5 ? "left" : "right";
+
+  if(side === "left"){
+    n.style.left = Math.random()*20 + "vw"; // left 0–20%
+  } else {
+    n.style.left = (80 + Math.random()*20) + "vw"; // right 80–100%
+  }
+
+  n.style.animationDuration = (Math.random()*3+7)+"s";
+
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(),10000);
+},100);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #2b0a1a, #5a0f2e, #a4163a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #fff5f7;
+    padding: 15px;
+  }
+
+  .container {
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 15px;
+    z-index: 2;
+  }
+
+  .title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2rem, 8vw, 3rem);
+    color: #ffccd5;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards;
+    animation-delay: 0.5s;
+  }
+
+  .line {
+    opacity: 0;
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  .line1 { animation: fadeUp 1s forwards; animation-delay: 1.5s; }
+  .line2 { animation: fadeUp 1s forwards; animation-delay: 2.5s; }
+  .line3 { animation: fadeUp 1s forwards; animation-delay: 3.5s; }
+  .line4 { animation: fadeUp 1s forwards; animation-delay: 4.5s; }
+
+  .highlight {
+    color: #ffd166;
+    font-weight: 600;
+    animation: glow 2s infinite alternate;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 8px #ffd166; }
+    to { text-shadow: 0 0 20px #ffb703, 0 0 30px #ffd166; }
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: absolute;
+    color: #ff8fab;
+    animation: float 6s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes float {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+  }
+
+  /* Background Heart */
+  .heart-bg {
+    position: absolute;
+    font-size: clamp(120px, 30vw, 220px);
+    color: rgba(255, 105, 135, 0.12);
+    animation: heartPulse 3s infinite;
+    filter: blur(6px);
+    z-index: 1;
+  }
+
+  @keyframes heartPulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(0.8);
+      opacity: 0.3;
+    }
+  }
+
+  /* Small devices tweak */
+  @media (max-width: 400px) {
+    .line {
+      margin-top: 10px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="heart-bg">❤</div>
+
+<div class="container">
+  <div class="title">My Love 💖</div>
+
+  <div class="line line1">
+    I don’t need anything else in life…
+  </div>
+
+  <div class="line line2">
+    Because <span class="highlight">you are everything</span> to me 🥺❤️
+  </div>
+
+  <div class="line line3">
+    You are my happiness, my peace, my world ✨
+  </div>
+
+  <div class="line line4">
+    <span class="highlight"> Once Again Happy Birthday ❤️🎂</span>
+  </div>
+</div>
+
+<script>
+  // Floating hearts
+  setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 16 + 12) + "px";
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 350);
+</script>
+
+</body>
+</html>
